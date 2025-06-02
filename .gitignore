@@ -1,0 +1,35 @@
+# Flutter/Dart specific
+.dart_tool/
+.flutter-plugins
+.flutter-plugins-dependencies
+.packages
+.pub-cache/
+.pub/
+build/
+ios/
+android/
+macos/
+windows/
+linux/
+*.iml
+*.log
+
+# Python specific
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+env/
+venv/
+.env
+.venv
+pip-log.txt
+pip-delete-this-directory.txt
+
+# IDE specific
+.idea/
+.vscode/
+*.swp
+*.swo
+.DS_Store 
