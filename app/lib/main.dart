@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 void main() {
   runApp(const MyApp());
@@ -13,9 +14,15 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Estética de Lucca',
       theme: ThemeData(
+        fontFamily: 'Playfair',
         colorScheme: ColorScheme.fromSeed(
-          seedColor: const Color(0xFF27A19C),
-          primary: const Color(0xFF27A19C),
+          seedColor: const Color(0xFFD0B8C8),
+          primary: const Color(0xFFD0B8C8),
+          secondary: const Color(0xFFBFD4E0),
+          surface: const Color(0xFFF0E4EA),
+          onSurface: const Color(0xFF1D2645),
+          onPrimary: const Color(0xFF1D2645),
+          onSecondary: const Color(0xFF1D2645),
         ),
         useMaterial3: true,
       ),
@@ -48,7 +55,7 @@ class LandingPage extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 16),
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: const Color(0xFF8E4162),
         boxShadow: [
           BoxShadow(
             color: Colors.black.withOpacity(0.1),
@@ -60,29 +67,36 @@ class LandingPage extends StatelessWidget {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          const Text(
-            'Estética de Lucca',
-            style: TextStyle(
-              fontSize: 24,
-              fontWeight: FontWeight.bold,
-              color: Color(0xFF27A19C),
-            ),
+          Row(
+            children: [
+              // Image.asset(
+              //   'assets/images/logo.png',
+              //   height: 40,
+              //   width: 40,
+              //   fit: BoxFit.contain,
+              // ),
+
+              // const SizedBox(width: 12),
+              Text(
+                'Estética de lucca',
+                style: TextStyle(
+                  fontSize: 24,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.white,
+                ),
+              ),
+            ],
           ),
           Row(
             children: [
               _buildSocialIcon(
-                Icons.facebook,
-                'https://facebook.com/barberiafina',
+                FontAwesomeIcons.whatsapp,
+                'https://wa.me/3314873611',
               ),
               const SizedBox(width: 16),
               _buildSocialIcon(
-                Icons.camera_alt,
-                'https://instagram.com/barberiafina',
-              ),
-              const SizedBox(width: 16),
-              _buildSocialIcon(
-                Icons.music_note,
-                'https://tiktok.com/@barberiafina',
+                FontAwesomeIcons.instagram,
+                'https://www.instagram.com/laesteticadelucca?igsh=bXpuY2g2Z2NkZmpj',
               ),
             ],
           ),
@@ -95,65 +109,121 @@ class LandingPage extends StatelessWidget {
     return IconButton(
       icon: Icon(icon),
       onPressed: () => _launchURL(url),
-      color: color ?? const Color(0xFF27A19C),
+      color: color ?? Colors.white,
     );
   }
 
   Widget _buildHero(BuildContext context) {
     return Container(
+      width: double.infinity,
       padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 48),
-      color: const Color(0xFF27A19C).withOpacity(0.1),
+      color: Theme.of(context).colorScheme.primary,
       child: Column(
         children: [
-          const Text(
-            'Cuidamos a tu mascota como parte de tu familia',
+          Container(
+            constraints: const BoxConstraints(maxHeight: 400),
+            decoration: BoxDecoration(borderRadius: BorderRadius.circular(16)),
+            child: ClipRRect(
+              borderRadius: BorderRadius.circular(16),
+              child: AspectRatio(
+                aspectRatio: 16 / 9,
+                child: Image.asset(
+                  'assets/images/landscape-logo.png',
+                  width: double.infinity,
+                  height: double.infinity,
+                  fit: BoxFit.cover,
+                ),
+              ),
+            ),
+          ),
+          const SizedBox(height: 24),
+          Text(
+            'Clínica veterinaria especializada en atención médica, vacunas y estética para perros y gatos. Servicio profesional con amor.',
             style: TextStyle(
-              fontSize: 32,
-              fontWeight: FontWeight.bold,
-              color: Color(0xFF27A19C),
+              fontSize: 18,
+              color: Theme.of(context).colorScheme.onSurface.withOpacity(0.8),
             ),
             textAlign: TextAlign.center,
           ),
-          const SizedBox(height: 16),
-          const Text(
-            'Clínica veterinaria especializada en atención médica, vacunas y estética para perros y gatos. Servicio profesional con amor.',
-            style: TextStyle(fontSize: 18, color: Colors.black87),
-            textAlign: TextAlign.center,
-          ),
           const SizedBox(height: 32),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              ElevatedButton(
-                onPressed: () => _launchURL('https://wa.me/5215512345678'),
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: const Color(0xFF27A19C),
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: 32,
-                    vertical: 16,
+          LayoutBuilder(
+            builder: (context, constraints) {
+              if (constraints.maxWidth < 600) {
+                return Column(
+                  children: [
+                    ElevatedButton(
+                      onPressed:
+                          () => _launchURL('https://wa.me/5215512345678'),
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: const Color(0xFFBB9D71),
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: 32,
+                          vertical: 16,
+                        ),
+                        minimumSize: const Size(double.infinity, 50),
+                      ),
+                      child: const Text(
+                        'Reserva una cita',
+                        style: TextStyle(fontSize: 16, color: Colors.white),
+                      ),
+                    ),
+                    const SizedBox(height: 16),
+                    OutlinedButton(
+                      onPressed: () => _launchURL('tel:+525512345678'),
+                      style: OutlinedButton.styleFrom(
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: 32,
+                          vertical: 16,
+                        ),
+                        side: const BorderSide(color: Color(0xFFBB9D71)),
+                        minimumSize: const Size(double.infinity, 50),
+                      ),
+                      child: const Text(
+                        'Contactános',
+                        style: TextStyle(
+                          fontSize: 16,
+                          color: Color(0xFFBB9D71),
+                        ),
+                      ),
+                    ),
+                  ],
+                );
+              }
+              return Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  ElevatedButton(
+                    onPressed: () => _launchURL('https://wa.me/5215512345678'),
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: const Color(0xFFBB9D71),
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: 32,
+                        vertical: 16,
+                      ),
+                    ),
+                    child: const Text(
+                      'Reserva una cita',
+                      style: TextStyle(fontSize: 16, color: Colors.white),
+                    ),
                   ),
-                ),
-                child: const Text(
-                  'Agendar cita por WhatsApp',
-                  style: TextStyle(fontSize: 16, color: Colors.white),
-                ),
-              ),
-              const SizedBox(width: 16),
-              OutlinedButton(
-                onPressed: () => _launchURL('tel:+525512345678'),
-                style: OutlinedButton.styleFrom(
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: 32,
-                    vertical: 16,
+                  const SizedBox(width: 16),
+                  OutlinedButton(
+                    onPressed: () => _launchURL('tel:+525512345678'),
+                    style: OutlinedButton.styleFrom(
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: 32,
+                        vertical: 16,
+                      ),
+                      side: const BorderSide(color: Color(0xFFBB9D71)),
+                    ),
+                    child: const Text(
+                      'Llamar ahora',
+                      style: TextStyle(fontSize: 16, color: Color(0xFFBB9D71)),
+                    ),
                   ),
-                  side: const BorderSide(color: Color(0xFF27A19C)),
-                ),
-                child: const Text(
-                  'Llamar ahora',
-                  style: TextStyle(fontSize: 16, color: Color(0xFF27A19C)),
-                ),
-              ),
-            ],
+                ],
+              );
+            },
           ),
         ],
       ),
@@ -162,34 +232,27 @@ class LandingPage extends StatelessWidget {
 
   Widget _buildServices(BuildContext context) {
     final services = [
+      {'name': 'Baño', 'description': 'Baño completo', 'price': 300},
+      {'name': 'Corte', 'description': 'Corte de pelo', 'price': 250},
       {
-        'name': 'Consulta general',
-        'description':
-            'Chequeo completo para perros y gatos con historial clínico digital.',
-        'price': 300,
-      },
-      {
-        'name': 'Vacuna antirrábica',
-        'description': 'Vacuna certificada con cartilla de vacunación.',
-        'price': 250,
-      },
-      {
-        'name': 'Baño y estética',
-        'description': 'Baño, corte de pelo y uñas. Incluye limpieza de oídos.',
+        'name': 'Cepillado de dientes',
+        'description': 'Cepillado de dientes.',
         'price': 400,
       },
     ];
 
     return Container(
+      width: double.infinity,
       padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 48),
+      color: Theme.of(context).colorScheme.secondary,
       child: Column(
         children: [
-          const Text(
+          Text(
             'Nuestros Servicios',
             style: TextStyle(
               fontSize: 32,
               fontWeight: FontWeight.bold,
-              color: Color(0xFF27A19C),
+              color: Theme.of(context).colorScheme.onSurface,
             ),
           ),
           const SizedBox(height: 32),
@@ -227,13 +290,13 @@ class LandingPage extends StatelessWidget {
             style: const TextStyle(
               fontSize: 24,
               fontWeight: FontWeight.bold,
-              color: Color(0xFF27A19C),
+              color: Color(0xFF1D2645),
             ),
           ),
           const SizedBox(height: 16),
           Text(
             service['description'],
-            style: const TextStyle(fontSize: 16, color: Colors.black87),
+            style: const TextStyle(fontSize: 16, color: Color(0xFF1D2645)),
           ),
           const SizedBox(height: 16),
           Text(
@@ -241,7 +304,7 @@ class LandingPage extends StatelessWidget {
             style: const TextStyle(
               fontSize: 20,
               fontWeight: FontWeight.bold,
-              color: Color(0xFF27A19C),
+              color: Color(0xFFBB9D71),
             ),
           ),
         ],
@@ -251,30 +314,42 @@ class LandingPage extends StatelessWidget {
 
   Widget _buildCTASection(BuildContext context) {
     return Container(
+      width: double.infinity,
       padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 48),
-      color: const Color(0xFF27A19C).withOpacity(0.1),
+      color: Theme.of(context).colorScheme.primary,
       child: Column(
         children: [
-          const Text(
+          Text(
             '¿Listo para cuidar a tu mascota?',
             style: TextStyle(
               fontSize: 32,
               fontWeight: FontWeight.bold,
-              color: Color(0xFF27A19C),
+              color: Theme.of(context).colorScheme.onSurface,
             ),
             textAlign: TextAlign.center,
           ),
           const SizedBox(height: 32),
-          ElevatedButton(
-            onPressed: () => _launchURL('https://wa.me/5215512345678'),
-            style: ElevatedButton.styleFrom(
-              backgroundColor: const Color(0xFF27A19C),
-              padding: const EdgeInsets.symmetric(horizontal: 48, vertical: 20),
-            ),
-            child: const Text(
-              'Agendar cita por WhatsApp',
-              style: TextStyle(fontSize: 18, color: Colors.white),
-            ),
+          LayoutBuilder(
+            builder: (context, constraints) {
+              return ElevatedButton(
+                onPressed: () => _launchURL('https://wa.me/5215512345678'),
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: const Color(0xFFBB9D71),
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 48,
+                    vertical: 20,
+                  ),
+                  minimumSize: Size(
+                    constraints.maxWidth < 600 ? double.infinity : 200,
+                    50,
+                  ),
+                ),
+                child: const Text(
+                  'Reserva una cita',
+                  style: TextStyle(fontSize: 18, color: Colors.white),
+                ),
+              );
+            },
           ),
         ],
       ),
@@ -284,7 +359,7 @@ class LandingPage extends StatelessWidget {
   Widget _buildFooter(BuildContext context) {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 32),
-      color: const Color(0xFF27A19C),
+      color: const Color(0xFF254E70),
       child: Column(
         children: [
           const Text(
@@ -300,20 +375,20 @@ class LandingPage extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               _buildSocialIcon(
-                Icons.facebook,
-                'https://facebook.com/barberiafina',
+                FontAwesomeIcons.whatsapp,
+                'https://wa.me/3314873611',
                 color: Colors.white,
               ),
               const SizedBox(width: 16),
               _buildSocialIcon(
-                Icons.camera_alt,
-                'https://instagram.com/barberiafina',
+                FontAwesomeIcons.phone,
+                'tel:+3314873611',
                 color: Colors.white,
               ),
               const SizedBox(width: 16),
               _buildSocialIcon(
-                Icons.music_note,
-                'https://tiktok.com/@barberiafina',
+                FontAwesomeIcons.instagram,
+                'https://www.instagram.com/laesteticadelucca?igsh=bXpuY2g2Z2NkZmpj',
                 color: Colors.white,
               ),
             ],
