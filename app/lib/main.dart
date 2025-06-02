@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'screens/reservations/reservation_form_screen.dart';
+import 'screens/reservations/date_time_screen.dart';
+import 'models/service.dart';
 
 void main() {
   runApp(const MyApp());
@@ -26,7 +29,12 @@ class MyApp extends StatelessWidget {
         ),
         useMaterial3: true,
       ),
-      home: const LandingPage(),
+      initialRoute: '/',
+      routes: {
+        '/': (context) => const LandingPage(),
+        '/reservations/form': (context) => const ReservationFormScreen(),
+        '/reservations/date-time': (context) => const DateTimeScreen(),
+      },
     );
   }
 }
@@ -153,7 +161,10 @@ class LandingPage extends StatelessWidget {
                   children: [
                     ElevatedButton(
                       onPressed:
-                          () => _launchURL('https://wa.me/5215512345678'),
+                          () => Navigator.pushNamed(
+                            context,
+                            '/reservations/form',
+                          ),
                       style: ElevatedButton.styleFrom(
                         backgroundColor: const Color(0xFFBB9D71),
                         padding: const EdgeInsets.symmetric(
@@ -193,7 +204,9 @@ class LandingPage extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   ElevatedButton(
-                    onPressed: () => _launchURL('https://wa.me/5215512345678'),
+                    onPressed:
+                        () =>
+                            Navigator.pushNamed(context, '/reservations/form'),
                     style: ElevatedButton.styleFrom(
                       backgroundColor: const Color(0xFFBB9D71),
                       padding: const EdgeInsets.symmetric(
@@ -231,16 +244,6 @@ class LandingPage extends StatelessWidget {
   }
 
   Widget _buildServices(BuildContext context) {
-    final services = [
-      {'name': 'Baño', 'description': 'Baño completo', 'price': 300},
-      {'name': 'Corte', 'description': 'Corte de pelo', 'price': 250},
-      {
-        'name': 'Cepillado de dientes',
-        'description': 'Cepillado de dientes.',
-        'price': 400,
-      },
-    ];
-
     return Container(
       width: double.infinity,
       padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 48),
@@ -260,14 +263,16 @@ class LandingPage extends StatelessWidget {
             spacing: 24,
             runSpacing: 24,
             children:
-                services.map((service) => _buildServiceCard(service)).toList(),
+                availableServices
+                    .map((service) => _buildServiceCard(service))
+                    .toList(),
           ),
         ],
       ),
     );
   }
 
-  Widget _buildServiceCard(Map<String, dynamic> service) {
+  Widget _buildServiceCard(Service service) {
     return Container(
       width: 300,
       padding: const EdgeInsets.all(24),
@@ -286,7 +291,7 @@ class LandingPage extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            service['name'],
+            service.name,
             style: const TextStyle(
               fontSize: 24,
               fontWeight: FontWeight.bold,
@@ -295,17 +300,26 @@ class LandingPage extends StatelessWidget {
           ),
           const SizedBox(height: 16),
           Text(
-            service['description'],
+            service.description,
             style: const TextStyle(fontSize: 16, color: Color(0xFF1D2645)),
           ),
           const SizedBox(height: 16),
-          Text(
-            '\$${service['price']}',
-            style: const TextStyle(
-              fontSize: 20,
-              fontWeight: FontWeight.bold,
-              color: Color(0xFFBB9D71),
-            ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Text(
+                '\$${service.price.toStringAsFixed(2)}',
+                style: const TextStyle(
+                  fontSize: 20,
+                  fontWeight: FontWeight.bold,
+                  color: Color(0xFFBB9D71),
+                ),
+              ),
+              Text(
+                '${service.durationMinutes} min',
+                style: const TextStyle(fontSize: 16, color: Color(0xFF1D2645)),
+              ),
+            ],
           ),
         ],
       ),
@@ -332,7 +346,8 @@ class LandingPage extends StatelessWidget {
           LayoutBuilder(
             builder: (context, constraints) {
               return ElevatedButton(
-                onPressed: () => _launchURL('https://wa.me/5215512345678'),
+                onPressed:
+                    () => Navigator.pushNamed(context, '/reservations/form'),
                 style: ElevatedButton.styleFrom(
                   backgroundColor: const Color(0xFFBB9D71),
                   padding: const EdgeInsets.symmetric(
